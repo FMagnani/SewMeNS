@@ -5,6 +5,8 @@ library(mclust)
 
 communities <- readRDS("..\\data\\processed\\communities.rds")
 
+#-------------------------------------------------------------------------------
+
 # Compute flux
 alluvial_data_long <- data.frame(
     "col1" = communities$RA,
@@ -170,7 +172,7 @@ plt_meta <- ggplot(
 ) + geom_text(
     stat = "stratum", aes(label = after_stat(stratum), fontface="bold"), size=4
 ) + theme_minimal() + ggtitle(
-    "Network meta-communities"
+    "Seasonal network meta-communities (hot season)"
 ) + guides(
     fill=guide_legend(title="Community")
 ) + theme(
@@ -211,3 +213,5 @@ for(comm_name in alluvial_data_freq$metacomm[alluvial_data_freq$metacomm != 'x']
 
 meta_communities_df <- data.frame(species=unlist(species_list), comm=unlist(comm_names_list))
 write.csv(meta_communities_df, "..\\data\\processed\\meta_communities.csv")
+
+#-------------------------------------------------------------------------------
