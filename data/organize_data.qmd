@@ -1,0 +1,208 @@
+---
+title: "organize_data"
+format: html
+editor: source
+---
+
+## Description
+
+Preprocessing of Copenhagen sewage metagenomic data: cleaning abundance tables, handling replicates, filtering rare taxa, retrieving taxonomy, and building an mgnet object.
+
+## Libraries
+
+```{r, message=FALSE}
+library(tidyverse)
+library(taxizedb)
+library(furrr)
+library(data.table)
+```
+
+## Abun
+
+```{r, message=FALSE}
+abun  <- fread("raw/genomic_species_abundance.csv.gz") %>%
+  column_to_rownames("V1")
+
+cleaned_taxa <- colnames(abun) %>%
+  gsub("\\[|\\]", "", .) %>%          
+  trimws() %>%
+  setNames(colnames(abun)) %>%
+  enframe(name = "taxa_id", value = "taxa_clean")
+
+abun <- abun %>%
+  as_tibble(rownames = "sample_id") %>%
+  pivot_longer(-sample_id, names_to = "taxa_id", values_to = "abun") %>%
+  left_join(cleaned_taxa, by = "taxa_id") %>%
+  group_by(sample_id, taxa_clean) %>%
+  summarise(abun = sum(abun), .groups = "drop") %>%
+  pivot_wider(names_from = "taxa_clean", values_from = "abun") %>%
+  column_to_rownames("sample_id")
+
+rm(cleaned_taxa)
+```
+
+## Meta
+
+```{r, message=FALSE}
+meta <- read_csv("raw/meta_location.csv") %>%
+  rename(specimen = sample_id) %>%
+  column_to_rownames("complete_name")
+```
+
+## Remove replicates and select Copenaghen samples
+
+```{r}
+sample_norep_cph <- abun %>%
+  as_tibble(rownames = "sample_id") %>%
+  pivot_longer(-sample_id, names_to = "taxa_id", values_to = "abun") %>%
+  group_by(sample_id) %>%
+  summarise(sample_sum = sum(abun), .groups = "drop") %>%
+  left_join(as_tibble(meta, rownames = "sample_id"), by = "sample_id") %>%
+  filter(city == "Copenhagen") %>%
+  group_by(specimen) %>%
+  slice_max(sample_sum) %>%
+  ungroup() %>%
+  pull(sample_id)
+```
+
+```{r}
+abun <- abun[sample_norep_cph, ]
+meta <- meta[sample_norep_cph, ]
+rm(sample_norep_cph)
+```
+
+```{r}
+meta <- meta %>%
+  mutate(plant = str_remove_all(plant, "Rensningsanlaeg "),
+         plant = factor(plant,
+                        levels = c("Avedoere", "Damhusaaen", "Lynetten")))
+```
+
+
+## Remove to rare taxa
+
+```{r, message=FALSE}
+abun <- abun[, colSums(abun) >= 100]
+```
+
+## Retrive taxonomy
+
+```{r}
+# -----------------------------
+# Original feature names
+# One row per column of abun
+# -----------------------------
+name_tbl <- tibble(name = colnames(abun))
+
+# -----------------------------
+# Name -> tax_id mapping
+# -----------------------------
+ncbi_id_raw <- name2taxid(colnames(abun), out_type = "summary")
+
+# If the summary output contains repeated identical pairs, remove exact duplicates only
+ncbi_id_raw <- ncbi_id_raw %>%
+  distinct(name, id)
+
+# IMPORTANT:
+# We now want one row per original name in abun.
+# If a name has multiple possible tax_ids, we still need one row.
+# The simplest choice is to keep the first available match for that name.
+# This does NOT affect the case "many names -> same tax_id", which remains intact.
+name2id_tbl <- name_tbl %>%
+  left_join(
+    ncbi_id_raw %>%
+      group_by(name) %>%
+      slice(1) %>%
+      ungroup() %>%
+      transmute(name, tax_id = as.character(id)),
+    by = "name"
+  )
+
+# -----------------------------
+# Classification function
+# -----------------------------
+wanted_ranks <- c("kingdom", "phylum", "class", "order", "family", "genus", "species")
+
+extract_ranks <- function(tax_id) {
+  cl <- tryCatch(
+    classification(tax_id, db = "ncbi"),
+    error = function(e) NULL
+  )
+
+  out <- setNames(as.list(rep(NA_character_, length(wanted_ranks))), wanted_ranks)
+
+  if (!is.null(cl) && length(cl) > 0 && !is.null(cl[[1]])) {
+    cl <- cl[[1]]
+
+    for (r in wanted_ranks) {
+      hit <- cl$name[cl$rank == r]
+      out[[r]] <- if (length(hit) > 0) hit[1] else NA_character_
+    }
+  }
+
+  tibble(
+    tax_id = as.character(tax_id),
+    kingdom = out$kingdom,
+    phylum  = out$phylum,
+    class   = out$class,
+    order   = out$order,
+    family  = out$family,
+    genus   = out$genus,
+    species = out$species
+  )
+}
+
+# -----------------------------
+# Parallel classification only on unique tax_ids
+# -----------------------------
+tax_ids <- name2id_tbl$tax_id %>%
+  unique() %>%
+  na.omit()
+
+plan(multisession, workers = 6)
+
+taxonomy_lookup <- future_map_dfr(
+  tax_ids,
+  extract_ranks,
+  .progress = TRUE
+)
+
+plan(sequential)
+
+# -----------------------------
+# Final taxonomy table
+# Same number of rows as ncol(abun)
+# Same order as colnames(abun)
+# -----------------------------
+taxonomy_df <- name2id_tbl %>%
+  left_join(taxonomy_lookup, by = "tax_id") %>%
+  select(tax_id, kingdom, phylum, class, order, family, genus, species) %>%
+  as.data.frame()
+
+rownames(taxonomy_df) <- colnames(abun)
+```
+
+```{r}
+rm(name_tbl, name2id_tbl, ncbi_id_raw, taxonomy_lookup, tax_ids, wanted_ranks, extract_ranks)
+```
+
+```{r}
+all(rownames(abun) == rownames(meta))
+all(colnames(abun) == rownames(taxonomy_df))
+```
+
+## Build mgnet object
+
+```{r}
+library(mgnet)
+sewage_cph <- mgnet(abun = as.matrix(abun), meta = meta, taxa = taxonomy_df)
+```
+
+## Save rds formats
+
+```{r}
+saveRDS(abun, "processed/abun.rds")
+saveRDS(meta, "processed/meta.rds")
+saveRDS(taxonomy_df, "processed/taxa.rds")
+saveRDS(sewage_cph, "processed/sewage_cph_mgnet.rds")
+```

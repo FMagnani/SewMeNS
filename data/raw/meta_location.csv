@@ -1,0 +1,279 @@
+sample_id,replica,collection_date,complete_name,ph,temperature,country,city,plant
+1015035,1,2020-07-23,DTU_2022_1015035_1_MG_IT_BO_200723_GSL_192,,,Italy,Bologna,Gruppo HERA
+1014141,1,2020-04-23,DTU_2022_1014141_1_MG_NL_RO_200423_GSL_1067,,,Netherlands,Rotterdam,Dokhaven
+1014178,1,2021-01-20,DTU_2022_1014178_1_MG_NL_RO_210120_GSL_1104,,,Netherlands,Rotterdam,Dokhaven
+1014162,1,2020-09-23,DTU_2022_1014162_1_MG_NL_RO_200923_GSL_1088,,,Netherlands,Rotterdam,Dokhaven
+1014149,1,2020-06-24,DTU_2022_1014149_1_MG_NL_RO_200624_GSL_1075,,,Netherlands,Rotterdam,Dokhaven
+1014190,1,2021-04-22,DTU_2022_1014190_1_MG_NL_RO_210422_GSL_1116,,,Netherlands,Rotterdam,Dokhaven
+1014200,1,2021-07-08,DTU_2022_1014200_1_MG_NL_RO_210708_GSL_1126,,,Netherlands,Rotterdam,Dokhaven
+1014172,1,2020-12-02,DTU_2022_1014172_1_MG_NL_RO_201202_GSL_1098,,,Netherlands,Rotterdam,Dokhaven
+1014180,1,2021-02-03,DTU_2022_1014180_1_MG_NL_RO_210203_GSL_1106,,,Netherlands,Rotterdam,Dokhaven
+1014139,1,2020-04-08,DTU_2022_1014139_1_MG_NL_RO_200408_GSL_1065,,,Netherlands,Rotterdam,Dokhaven
+1014196,1,2021-06-09,DTU_2022_1014196_1_MG_NL_RO_210609_GSL_1122,,,Netherlands,Rotterdam,Dokhaven
+1014154,1,2020-07-24,DTU_2022_1014154_1_MG_NL_RO_200724_GSL_1080,,,Netherlands,Rotterdam,Dokhaven
+1014145,1,2020-05-21,DTU_2022_1014145_1_MG_NL_RO_200521_GSL_1071,,,Netherlands,Rotterdam,Dokhaven
+1014183,1,2021-02-25,DTU_2022_1014183_1_MG_NL_RO_210225_GSL_1109,,,Netherlands,Rotterdam,Dokhaven
+1014146,1,2020-06-03,DTU_2022_1014146_1_MG_NL_RO_200603_GSL_1072,,,Netherlands,Rotterdam,Dokhaven
+1014203,1,2021-07-28,DTU_2022_1014203_1_MG_NL_RO_210728_GSL_1129,,,Netherlands,Rotterdam,Dokhaven
+1014184,1,2021-03-03,DTU_2022_1014184_1_MG_NL_RO_210303_GSL_1110,,,Netherlands,Rotterdam,Dokhaven
+1014166,1,2020-10-23,DTU_2022_1014166_1_MG_NL_RO_201023_GSL_1092,,,Netherlands,Rotterdam,Dokhaven
+1014151,1,2020-07-06,DTU_2022_1014151_1_MG_NL_RO_200706_GSL_1077,,,Netherlands,Rotterdam,Dokhaven
+1014175,1,2020-12-23,DTU_2022_1014175_1_MG_NL_RO_201223_GSL_1101,,,Netherlands,Rotterdam,Dokhaven
+1014194,1,2021-05-26,DTU_2022_1014194_1_MG_NL_RO_210526_GSL_1120,,,Netherlands,Rotterdam,Dokhaven
+1014176,1,2021-01-06,DTU_2022_1014176_1_MG_NL_RO_210106_GSL_1102,,,Netherlands,Rotterdam,Dokhaven
+1014159,1,2020-09-02,DTU_2022_1014159_1_MG_NL_RO_200902_GSL_1085,,,Netherlands,Rotterdam,Dokhaven
+1014198,1,2021-06-23,DTU_2022_1014198_1_MG_NL_RO_210623_GSL_1124,,,Netherlands,Rotterdam,Dokhaven
+1014156,1,2020-08-05,DTU_2022_1014156_1_MG_NL_RO_200805_GSL_1082,,,Netherlands,Rotterdam,Dokhaven
+1014143,1,2020-05-04,DTU_2022_1014143_1_MG_NL_RO_200504_GSL_1069,,,Netherlands,Rotterdam,Dokhaven
+1014192,1,2021-05-05,DTU_2022_1014192_1_MG_NL_RO_210505_GSL_1118,,,Netherlands,Rotterdam,Dokhaven
+1014168,1,2020-11-04,DTU_2022_1014168_1_MG_NL_RO_201104_GSL_1094,,,Netherlands,Rotterdam,Dokhaven
+1014164,1,2020-10-07,DTU_2022_1014164_1_MG_NL_RO_201007_GSL_1090,,,Netherlands,Rotterdam,Dokhaven
+1014158,1,2020-08-25,DTU_2022_1014158_1_MG_NL_RO_200823_GSL_1084,,,Netherlands,Rotterdam,Dokhaven
+1014187,1,2021-03-24,DTU_2022_1014187_1_MG_NL_RO_210324_GSL_1113,,,Netherlands,Rotterdam,Dokhaven
+1014171,1,2020-11-25,DTU_2022_1014171_1_MG_NL_RO_201125_GSL_1097,,,Netherlands,Rotterdam,Dokhaven
+1014188,1,2021-04-07,DTU_2022_1014188_1_MG_NL_RO_210407_GSL_1114,,,Netherlands,Rotterdam,Dokhaven
+1014205,1,2021-08-11,DTU_2022_1014205_1_MG_NL_RO_210811_GSL_1131,,,Netherlands,Rotterdam,Dokhaven
+1014208,1,2021-08-30,DTU_2022_1014208_1_MG_NL_RO_210830_GSL_1134,,,Netherlands,Rotterdam,Dokhaven
+1014209,1,2021-09-22,DTU_2022_1014209_1_MG_NL_RO_210922_GSL_1135,,,Netherlands,Rotterdam,Dokhaven
+1014210,1,2021-09-29,DTU_2022_1014210_1_MG_NL_RO_210929_GSL_1136,,,Netherlands,Rotterdam,Dokhaven
+1014211,1,2021-10-07,DTU_2022_1014211_1_MG_NL_RO_211007_GSL_1137,,,Netherlands,Rotterdam,Dokhaven
+1014213,1,2021-10-20,DTU_2022_1014213_1_MG_NL_RO_211020_GSL_1139,,,Netherlands,Rotterdam,Dokhaven
+1014215,1,2021-11-03,DTU_2022_1014215_1_MG_NL_RO_211103_GSL_1141,,,Netherlands,Rotterdam,Dokhaven
+1007228,1,2020-04-27,DTU_2020_1007228_1_MG_RA_CPH_Sewage_655,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007231,1,2020-05-05,DTU_2020_1007231_1_MG_RA_CPH_Sewage_663,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007221,2,2020-03-20,DTU_2020_1007221_2_MG_RA_CPH_Sewage_648,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007213,1,2020-04-02,DTU_2020_1007213_1_MG_RA_CPH_Sewage_638,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007181,1,2019-11-17,DTU_2020_1007181_1_MG_RA_CPH_Sewage_603,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007265,1,2020-08-04,DTU_2020_1007265_1_MG_RA_CPH_Sewage_726,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007184,2,2019-11-24,DTU_2020_1007184_2_MG_RA_CPH_Sewage_606,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007218,1,2020-03-12,DTU_2020_1007218_1_MG_RA_CPH_Sewage_645,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007187,2,2019-12-02,DTU_2020_1007187_2_MG_RA_CPH_Sewage_609,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007278,1,2020-09-28,DTU_2020_1007278_1_MG_RA_CPH_Sewage_2_587,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007201,1,2020-02-29,DTU_2020_1007201_1_MG_RA_CPH_Sewage_626,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007199,1,2020-01-22,DTU_2020_1007199_1_MG_RA_CPH_Sewage_624,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007162,1,2019-05-27,DTU_2020_1007162_1_MG_RA_CPH_Sewage_536,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007253,1,2020-07-07,DTU_2020_1007253_1_MG_RA_CPH_Sewage_714,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007271,1,2020-08-19,DTU_2020_1007271_1_MG_RA_CPH_Sewage_735,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007271,2,2020-08-19,DTU_2020_1007271_2_MG_RA_CPH_Sewage_735,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007167,1,2019-07-27,DTU_2020_1007167_1_MG_RA_CPH_Sewage_560,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007250,1,2020-06-29,DTU_2020_1007250_1_MG_RA_CPH_Sewage_711,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007181,2,2019-11-17,DTU_2020_1007181_2_MG_RA_CPH_Sewage_603,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007165,1,2019-06-28,DTU_2020_1007165_1_MG_RA_CPH_Sewage_547,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007273,2,2020-08-27,DTU_2020_1007273_2_MG_RA_CPH_Sewage_741,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007234,1,2020-05-14,DTU_2020_1007234_1_MG_RA_CPH_Sewage_672,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007190,1,2019-12-20,DTU_2020_1007190_1_MG_RA_CPH_Sewage_615,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007240,1,2020-06-04,DTU_2020_1007240_1_MG_RA_CPH_Sewage_690,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007237,2,2020-05-28,DTU_2020_1007237_2_MG_RA_CPH_Sewage_684,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007150,1,2019-01-30,DTU_2020_1007150_1_MG_RA_CPH_Sewage_494,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007204,1,2020-02-04,DTU_2020_1007204_1_MG_RA_CPH_Sewage_629,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007218,2,2020-03-12,DTU_2020_1007218_2_MG_RA_CPH_Sewage_645,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007259,1,2020-07-23,DTU_2020_1007259_1_MG_RA_CPH_Sewage_720,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007153,1,2019-02-18,DTU_2020_1007153_1_MG_RA_CPH_Sewage_504,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007187,1,2019-12-02,DTU_2020_1007187_1_MG_RA_CPH_Sewage_609,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007221,1,2020-03-20,DTU_2020_1007221_1_MG_RA_CPH_Sewage_648,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007243,1,2020-06-10,DTU_2020_1007243_1_MG_RA_CPH_Sewage_696,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007237,1,2020-05-28,DTU_2020_1007237_1_MG_RA_CPH_Sewage_684,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007174,2,2019-10-13,DTU_2020_1007174_2_MG_RA_CPH_Sewage_593,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007193,2,2020-01-07,DTU_2020_1007193_2_MG_RA_CPH_Sewage_618,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007262,1,2020-07-29,DTU_2020_1007262_1_MG_RA_CPH_Sewage_723,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007277,1,2019-09-28,DTU_2020_1007277_1_MG_RA_CPH_Sewage_1_587,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007207,1,2020-02-11,DTU_2020_1007207_1_MG_RA_CPH_Sewage_632,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007283,1,2020-05-20,DTU_2020_1007283_1_MG_RA_CPH_Sewage_1_678,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007268,1,2020-08-12,DTU_2020_1007268_1_MG_RA_CPH_Sewage_732,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007190,2,2019-12-20,DTU_2020_1007190_2_MG_RA_CPH_Sewage_615,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007178,1,2019-11-11,DTU_2020_1007178_1_MG_RA_CPH_Sewage_600,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007193,1,2020-01-07,DTU_2020_1007193_1_MG_RA_CPH_Sewage_618,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007184,1,2019-11-24,DTU_2020_1007184_1_MG_RA_CPH_Sewage_606,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007256,1,2020-07-14,DTU_2020_1007256_1_MG_RA_CPH_Sewage_717,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007273,1,2020-08-27,DTU_2020_1007273_1_MG_RA_CPH_Sewage_741,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007210,1,2020-02-19,DTU_2020_1007210_1_MG_RA_CPH_Sewage_635,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007196,1,2020-01-14,DTU_2020_1007196_1_MG_RA_CPH_Sewage_621,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007284,1,2020-05-20,DTU_2020_1007284_1_MG_RA_CPH_Sewage_2_678,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007174,1,2019-10-13,DTU_2020_1007174_1_MG_RA_CPH_Sewage_593,,,Denmark,Copenhagen,Rensningsanlaeg Avedoere
+1007154,1,2019-02-18,DTU_2020_1007154_1_MG_RD_CPH_Sewage_505,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007175,2,2019-10-13,DTU_2020_1007175_2_MG_RD_CPH_Sewage_594,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007185,1,2019-11-24,DTU_2020_1007185_1_MG_RD_CPH_Sewage_607,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007248,1,2020-06-24,DTU_2020_1007248_1_MG_RD_CPH_Sewage_709,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007286,1,2020-05-20,DTU_2020_1007286_1_MG_RD_CPH_Sewage_2_679,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007266,1,2020-08-04,DTU_2020_1007266_1_MG_RD_CPH_Sewage_727,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007260,1,2020-07-23,DTU_2020_1007260_1_MG_RD_CPH_Sewage_721,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007185,2,2019-11-24,DTU_2020_1007185_2_MG_RD_CPH_Sewage_607,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007238,2,2020-05-28,DTU_2020_1007238_2_MG_RD_CPH_Sewage_685,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007232,1,2020-05-05,DTU_2020_1007232_1_MG_RD_CPH_Sewage_664,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007238,1,2020-05-28,DTU_2020_1007238_1_MG_RD_CPH_Sewage_685,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007212,1,2020-02-26,DTU_2020_1007212_1_MG_RD_CPH_Sewage_637,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007229,1,2020-04-27,DTU_2020_1007229_1_MG_RD_CPH_Sewage_656,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007177,2,2019-11-02,DTU_2020_1007177_2_MG_RD_CPH_Sewage_598,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007208,1,2020-02-11,DTU_2020_1007208_1_MG_RD_CPH_Sewage_633,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007285,1,2020-05-20,DTU_2020_1007285_1_MG_RD_CPH_Sewage_1_679,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007263,1,2020-07-29,DTU_2020_1007263_1_MG_RD_CPH_Sewage_724,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007182,1,2019-11-17,DTU_2020_1007182_1_MG_RD_CPH_Sewage_604,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007182,2,2019-11-17,DTU_2020_1007182_2_MG_RD_CPH_Sewage_604,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007217,1,2020-03-05,DTU_2020_1007217_1_MG_RD_CPH_Sewage_643,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007225,1,2020-03-26,DTU_2020_1007225_1_MG_RD_CPH_Sewage_652,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007220,1,2020-03-12,DTU_2020_1007220_1_MG_RD_CPH_Sewage_647,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007274,1,2020-08-27,DTU_2020_1007274_1_MG_RD_CPH_Sewage_742,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007188,1,2019-12-02,DTU_2020_1007188_1_MG_RD_CPH_Sewage_610,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007188,2,2019-12-02,DTU_2020_1007188_2_MG_RD_CPH_Sewage_610,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007157,1,2019-03-27,DTU_2020_1007157_1_MG_RD_CPH_Sewage_517,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007254,1,2020-07-07,DTU_2020_1007254_1_MG_RD_CPH_Sewage_715,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007232,2,2020-05-05,DTU_2020_1007232_2_MG_RD_CPH_Sewage_664,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007223,1,2020-03-20,DTU_2020_1007223_1_MG_RD_CPH_Sewage_650,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007257,1,2020-07-14,DTU_2020_1007257_1_MG_RD_CPH_Sewage_718,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007241,1,2020-06-04,DTU_2020_1007241_1_MG_RD_CPH_Sewage_691,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007160,1,2019-04-26,DTU_2020_1007160_1_MG_RD_CPH_Sewage_529,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007223,2,2020-03-20,DTU_2020_1007223_2_MG_RD_CPH_Sewage_650,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007154,2,2019-02-18,DTU_2020_1007154_2_MG_RD_CPH_Sewage_505,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007214,2,2020-04-02,DTU_2020_1007214_2_MG_RD_CPH_Sewage_639,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007179,1,2019-11-11,DTU_2020_1007179_1_MG_RD_CPH_Sewage_601,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007269,1,2020-08-12,DTU_2020_1007269_1_MG_RD_CPH_Sewage_733,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007235,1,2020-05-14,DTU_2020_1007235_1_MG_RD_CPH_Sewage_673,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007177,1,2019-11-02,DTU_2020_1007177_1_MG_RD_CPH_Sewage_598,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007202,1,2020-02-29,DTU_2020_1007202_1_MG_RD_CPH_Sewage_627,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007194,1,2020-01-07,DTU_2020_1007194_1_MG_RD_CPH_Sewage_619,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007211,1,2020-02-19,DTU_2020_1007211_1_MG_RD_CPH_Sewage_636,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007179,2,2019-11-11,DTU_2020_1007179_2_MG_RD_CPH_Sewage_601,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007279,1,2019-09-28,DTU_2020_1007279_1_MG_RD_CPH_Sewage_1_588,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007241,2,2020-06-04,DTU_2020_1007241_2_MG_RD_CPH_Sewage_691,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007280,2,2020-09-28,DTU_2020_1007280_2_MG_RD_CPH_Sewage_2_588,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007246,1,2020-06-17,DTU_2020_1007246_1_MG_RD_CPH_Sewage_703,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007280,1,2020-09-28,DTU_2020_1007280_1_MG_RD_CPH_Sewage_2_588,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007244,1,2020-06-10,DTU_2020_1007244_1_MG_RD_CPH_Sewage_697,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007251,1,2020-06-29,DTU_2020_1007251_1_MG_RD_CPH_Sewage_712,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007191,1,2019-12-20,DTU_2020_1007191_1_MG_RD_CPH_Sewage_616,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007175,1,2019-10-13,DTU_2020_1007175_1_MG_RD_CPH_Sewage_594,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007197,1,2020-01-14,DTU_2020_1007197_1_MG_RD_CPH_Sewage_622,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007205,1,2020-02-04,DTU_2020_1007205_1_MG_RD_CPH_Sewage_630,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007214,1,2020-04-02,DTU_2020_1007214_1_MG_RD_CPH_Sewage_639,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007166,1,2019-06-28,DTU_2020_1007166_1_MG_RD_CPH_Sewage_548,,,Denmark,Copenhagen,Rensningsanlaeg Damhusaaen
+1007267,2,2020-08-12,DTU_2020_1007267_2_MG_RL_CPH_Sewage_731,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007224,1,2020-03-26,DTU_2020_1007224_1_MG_RL_CPH_Sewage_651,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007176,1,2019-11-02,DTU_2020_1007176_1_MG_RL_CPH_Sewage_597,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007158,1,2019-03-27,DTU_2020_1007158_1_MG_RL_CPH_Sewage_518,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007236,2,2020-05-28,DTU_2020_1007236_2_MG_RL_CPH_Sewage_683,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007264,1,2020-08-04,DTU_2020_1007264_1_MG_RL_CPH_Sewage_725,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007261,1,2020-07-29,DTU_2020_1007261_1_MG_RL_CPH_Sewage_722,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007189,1,2019-12-20,DTU_2020_1007189_1_MG_RL_CPH_Sewage_614,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007176,2,2019-11-02,DTU_2020_1007176_2_MG_RL_CPH_Sewage_597,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007198,1,2020-01-22,DTU_2020_1007198_1_MG_RL_CPH_Sewage_623,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007255,1,2020-07-14,DTU_2020_1007255_1_MG_RL_CPH_Sewage_716,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007216,1,2020-03-05,DTU_2020_1007216_1_MG_RL_CPH_Sewage_642,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007270,2,2020-08-19,DTU_2020_1007270_2_MG_RL_CPH_Sewage_734,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007247,1,2020-06-24,DTU_2020_1007247_1_MG_RL_CPH_Sewage_707,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007186,1,2019-12-02,DTU_2020_1007186_1_MG_RL_CPH_Sewage_608,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007239,1,2020-06-04,DTU_2020_1007239_1_MG_RL_CPH_Sewage_689,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007281,2,2020-05-20,DTU_2020_1007281_2_MG_RL_CPH_Sewage_1_677,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007275,2,2019-09-28,DTU_2020_1007275_2_MG_RL_CPH_Sewage_1_586,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007170,1,2019-08-29,DTU_2020_1007170_1_MG_RL_CPH_Sewage_571,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007230,3,2020-05-05,DTU_2020_1007230_3_MG_RL_CPH_Sewage_662,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007180,1,2019-11-17,DTU_2020_1007180_1_MG_RL_CPH_Sewage_602,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007206,1,2020-02-11,DTU_2020_1007206_1_MG_RL_CPH_Sewage_631,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007282,1,2020-05-20,DTU_2020_1007282_1_MG_RL_CPH_Sewage_2_677,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007195,1,2020-01-14,DTU_2020_1007195_1_MG_RL_CPH_Sewage_620,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007252,1,2020-07-07,DTU_2020_1007252_1_MG_RL_CPH_Sewage_713,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007245,1,2020-06-17,DTU_2020_1007245_1_MG_RL_CPH_Sewage_701,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007226,1,2020-04-16,DTU_2020_1007226_1_MG_RL_CPH_Sewage_653,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007183,1,2019-11-24,DTU_2020_1007183_1_MG_RL_CPH_Sewage_605,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007233,1,2020-05-14,DTU_2020_1007233_1_MG_RL_CPH_Sewage_671,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007242,1,2020-06-10,DTU_2020_1007242_1_MG_RL_CPH_Sewage_695,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007272,1,2020-08-27,DTU_2020_1007272_1_MG_RL_CPH_Sewage_740,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007227,1,2020-04-27,DTU_2020_1007227_1_MG_RL_CPH_Sewage_654,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007242,2,2020-06-10,DTU_2020_1007242_2_MG_RL_CPH_Sewage_695,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007215,1,2020-04-02,DTU_2020_1007215_1_MG_RL_CPH_Sewage_640,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007183,2,2019-11-24,DTU_2020_1007183_2_MG_RL_CPH_Sewage_605,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007192,1,2020-01-07,DTU_2020_1007192_1_MG_RL_CPH_Sewage_617,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007219,2,2020-03-12,DTU_2020_1007219_2_MG_RL_CPH_Sewage_646,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007281,1,2020-05-20,DTU_2020_1007281_1_MG_RL_CPH_Sewage_1_677,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007267,1,2020-08-12,DTU_2020_1007267_1_MG_RL_CPH_Sewage_731,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007215,2,2020-04-02,DTU_2020_1007215_2_MG_RL_CPH_Sewage_640,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007230,1,2020-05-05,DTU_2020_1007230_1_MG_RL_CPH_Sewage_662,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007216,2,2020-03-05,DTU_2020_1007216_2_MG_RL_CPH_Sewage_642,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007173,1,2019-10-13,DTU_2020_1007173_1_MG_RL_CPH_Sewage_592,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007222,1,2020-03-20,DTU_2020_1007222_1_MG_RL_CPH_Sewage_649,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007270,1,2020-08-19,DTU_2020_1007270_1_MG_RL_CPH_Sewage_734,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007276,1,2020-09-28,DTU_2020_1007276_1_MG_RL_CPH_Sewage_2_586,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007275,1,2019-09-28,DTU_2020_1007275_1_MG_RL_CPH_Sewage_1_586,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007203,1,2020-02-04,DTU_2020_1007203_1_MG_RL_CPH_Sewage_628,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007200,1,2020-02-29,DTU_2020_1007200_1_MG_RL_CPH_Sewage_625,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007209,1,2020-02-19,DTU_2020_1007209_1_MG_RL_CPH_Sewage_634,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007249,1,2020-06-29,DTU_2020_1007249_1_MG_RL_CPH_Sewage_710,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007236,1,2020-05-28,DTU_2020_1007236_1_MG_RL_CPH_Sewage_683,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007180,2,2019-11-17,DTU_2020_1007180_2_MG_RL_CPH_Sewage_602,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007219,1,2020-03-12,DTU_2020_1007219_1_MG_RL_CPH_Sewage_646,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007272,2,2020-08-27,DTU_2020_1007272_2_MG_RL_CPH_Sewage_740,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007258,1,2020-07-23,DTU_2020_1007258_1_MG_RL_CPH_Sewage_719,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007230,2,2020-05-05,DTU_2020_1007230_2_MG_RL_CPH_Sewage_662,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1007186,2,2019-12-02,DTU_2020_1007186_2_MG_RL_CPH_Sewage_608,,,Denmark,Copenhagen,Rensningsanlaeg Lynetten
+1015068,1,2021-03-23,DTU_2022_1015068_1_MG_IT_BO_210323_GSL_856,6.5,15.8,Italy,Bologna,Gruppo HERA
+1014216,1,2020-03-12,DTU_2022_1014216_1_MG_IT_BO_200312_GSL_34,7.03,15.8,Italy,Bologna,Gruppo HERA
+1014228,1,2020-06-01,DTU_2022_1014228_1_MG_IT_BO_200601_GSL_64,7.37,20.5,Italy,Bologna,Gruppo HERA
+1014220,1,2020-04-07,DTU_2022_1014220_1_MG_IT_BO_200407_GSL_60,7.45,16.7,Italy,Bologna,Gruppo HERA
+1014231,1,2020-06-23,DTU_2022_1014231_1_MG_IT_BO_200623_GSL_139,7.43,21.6,Italy,Bologna,Gruppo HERA
+1014224,1,2020-05-05,DTU_2022_1014224_1_MG_IT_BO_200505_GSL_74,7.4,18.4,Italy,Bologna,Gruppo HERA
+1015062,1,2021-02-02,DTU_2022_1015062_1_MG_IT_BO_210202_GSL_764,7.35,13.0,Italy,Bologna,Gruppo HERA
+1015050,1,2020-11-10,DTU_2022_1015050_1_MG_IT_BO_201110_GSL_299,7.88,19.7,Italy,Bologna,Gruppo HERA
+1015041,1,2020-09-08,DTU_2022_1015041_1_MG_IT_BO_200908_GSL_211,7.15,22.5,Italy,Bologna,Gruppo HERA
+1015047,1,2020-10-20,DTU_2022_1015047_1_MG_IT_BO_201020_GSL_294,7.49,20.5,Italy,Bologna,Gruppo HERA
+1015039,1,2020-08-25,DTU_2022_1015039_1_MG_IT_BO_200825_GSL_209,7.67,23.4,Italy,Bologna,Gruppo HERA
+1015056,1,2020-12-22,DTU_2022_1015056_1_MG_IT_BO_201222_GSL_420,7.3,16.2,Italy,Bologna,Gruppo HERA
+1015058,1,2021-01-05,DTU_2022_1015058_1_MG_IT_BO_210105_GSL_423,7.18,15.0,Italy,Bologna,Gruppo HERA
+1014226,1,2020-05-18,DTU_2022_1014226_1_MG_IT_BO_200518_GSL_36,7.63,19.8,Italy,Bologna,Gruppo HERA
+1014218,1,2020-03-24,DTU_2022_1014218_1_MG_IT_BO_200324_GSL_59,6.59,15.9,Italy,Bologna,Gruppo HERA
+1015037,1,2020-08-06,DTU_2022_1015037_1_MG_IT_BO_200806_GSL_189,7.39,23.1,Italy,Bologna,Gruppo HERA
+1015054,1,2020-12-10,DTU_2022_1015054_1_MG_IT_BO_201210_GSL_417,7.51,15.8,Italy,Bologna,Gruppo HERA
+1015043,1,2020-09-22,DTU_2022_1015043_1_MG_IT_BO_200922_GSL_291,7.61,22.9,Italy,Bologna,Gruppo HERA
+1015045,1,2020-10-08,DTU_2022_1015045_1_MG_IT_BO_201008_GSL_409,7.47,21.7,Italy,Bologna,Gruppo HERA
+1015060,1,2021-01-19,DTU_2022_1015060_1_MG_IT_BO_210119_GSL_725,7.54,13.7,Italy,Bologna,Gruppo HERA
+1015033,1,2020-07-09,DTU_2022_1015033_1_MG_IT_BO_200709_GSL_142,7.44,22.7,Italy,Bologna,Gruppo HERA
+1015072,1,2021-04-27,DTU_2022_1015072_1_MG_IT_BO_210427_GSL_860,7.22,17.4,Italy,Bologna,Gruppo HERA
+1015070,1,2021-04-13,DTU_2022_1015070_1_MG_IT_BO_210413_GSL_857,7.07,16.4,Italy,Bologna,Gruppo HERA
+1015066,1,2021-03-09,DTU_2022_1015066_1_MG_IT_BO_210309_GSL_795,7.63,13.8,Italy,Bologna,Gruppo HERA
+1014222,1,2020-04-21,DTU_2022_1014222_1_MG_IT_BO_200421_GSL_105,7.47,16.1,Italy,Bologna,Gruppo HERA
+1015064,1,2021-02-23,DTU_2022_1015064_1_MG_IT_BO_210223_GSL_793,7.71,15.5,Italy,Bologna,Gruppo HERA
+1015052,1,2020-11-26,DTU_2022_1015052_1_MG_IT_BO_201126_GSL_414,7.66,17.2,Italy,Bologna,Gruppo HERA
+1014095,1,2020-08-17,DTU_2022_1014095_1_MG_HU_BU_3_200817_GSL_262,7.84,23.1,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014120,1,2021-01-18,DTU_2022_1014120_1_MG_HU_BU_3_210118_GSL_749,7.91,12.2,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014129,1,2021-03-15,DTU_2022_1014129_1_MG_HU_BU_3_210315_GSL_803,7.84,14.5,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014086,1,2020-06-29,DTU_2022_1014086_1_MG_HU_BU_3_200629_GSL_160,7.61,22.4,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014103,1,2020-10-05,DTU_2022_1014103_1_MG_HU_BU_3_201005_GSL_338,7.73,21.9,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014114,1,2020-12-07,DTU_2022_1014114_1_MG_HU_BU_3_201207_GSL_604,8.08,16.9,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014124,1,2021-02-15,DTU_2022_1014124_1_MG_HU_BU_3_210215_GSL_772,7.78,12.4,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014083,1,2020-05-25,DTU_2022_1014083_1_MG_HU_BU_3_200525_GSL_67,7.93,17.6,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014131,1,2021-03-29,DTU_2022_1014131_1_MG_HU_BU_3_210329_GSL_818,7.48,17.4,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014121,1,2021-01-25,DTU_2022_1014121_1_MG_HU_BU_3_210125_GSL_750,7.76,14.2,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014125,1,2021-02-22,DTU_2022_1014125_1_MG_HU_BU_3_210222_GSL_776,7.87,13.0,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014106,1,2020-10-27,DTU_2022_1014106_1_MG_HU_BU_3_201027_GSL_346,7.58,19.4,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014111,1,2020-11-23,DTU_2022_1014111_1_MG_HU_BU_3_201123_GSL_599,7.7,15.6,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014099,1,2020-09-15,DTU_2022_1014099_1_MG_HU_BU_3_200915_GSL_326,7.75,23.8,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014138,1,2021-05-17,DTU_2022_1014138_1_MG_HU_BU_3_210517_GSL_948,7.51,17.8,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014089,1,2020-07-06,DTU_2022_1014089_1_MG_HU_BU_3_200706_GSL_168,7.66,21.0,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014117,1,2020-12-28,DTU_2022_1014117_1_MG_HU_BU_3_201228_GSL_715,7.75,15.7,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014098,1,2020-09-07,DTU_2022_1014098_1_MG_HU_BU_3_200907_GSL_274,7.72,22.5,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014137,1,2021-04-04,DTU_2022_1014137_1_MG_HU_BU_3_210404_GSL_944,7.76,14.0,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014087,1,2020-06-01,DTU_2022_1014087_1_MG_HU_BU_3_200601_GSL_166,7.72,19.1,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014135,1,2021-05-04,DTU_2022_1014135_1_MG_HU_BU_3_210504_GSL_911,7.39,17.1,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014107,1,2020-11-03,DTU_2022_1014107_1_MG_HU_BU_3_201103_GSL_404,8.01,19.0,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014082,1,2020-05-18,DTU_2022_1014082_1_MG_HU_BU_3_200518_GSL_42,7.56,20.4,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014093,1,2020-08-03,DTU_2022_1014093_1_MG_HU_BU_3_200803_GSL_242,7.59,23.4,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014134,1,2021-04-26,DTU_2022_1014134_1_MG_HU_BU_3_210426_GSL_907,7.59,16.3,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1014091,1,2020-07-27,DTU_2022_1014091_1_MG_HU_BU_3_200721_GSL_198,7.87,23.7,Hungary,Budapest,Budapesti Központi Szennyvíztisztító Telep
+1015089,1,2020-07-14,DTU_2022_1015089_1_MG_IT_RO_200714_GSL_353,7.95,17.8,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015094,1,2020-08-26,DTU_2022_1015094_1_MG_IT_RO_200826_GSL_358,7.26,18.5,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015096,1,2020-09-08,DTU_2022_1015096_1_MG_IT_RO_200908_GSL_360,7.72,17.9,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015077,1,2020-04-14,DTU_2022_1015077_1_MG_IT_RO_200414_GSL_5,7.9,13.2,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015087,1,2020-06-30,DTU_2022_1015087_1_MG_IT_RO_200630_GSL_351,7.85,17.8,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015075,1,2020-03-31,DTU_2022_1015075_1_MG_IT_RO_200331_GSL_3,7.92,13.7,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015100,1,2020-10-06,DTU_2022_1015100_1_MG_IT_RO_201006_GSL_364,8.01,16.6,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015085,1,2020-06-16,DTU_2022_1015085_1_MG_IT_RO_200616_GSL_91,7.59,16.6,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015078,1,2020-04-21,DTU_2022_1015078_1_MG_IT_RO_200421_GSL_84,7.9,15.1,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015081,1,2020-05-12,DTU_2022_1015081_1_MG_IT_RO_200512_GSL_87,7.56,16.2,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015083,1,2020-05-26,DTU_2022_1015083_1_MG_IT_RO_200526_GSL_89,7.59,15.9,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015098,1,2020-09-22,DTU_2022_1015098_1_MG_IT_RO_200922_GSL_362,7.73,18.7,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015105,1,2020-11-10,DTU_2022_1015105_1_MG_IT_RO_201110_GSL_369,7.86,14.8,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015107,1,2020-11-24,DTU_2022_1015107_1_MG_IT_RO_201124_GSL_371,7.99,13.4,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015109,1,2020-12-09,DTU_2022_1015109_1_MG_IT_RO_201209_GSL_373,7.97,12.2,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015073,1,2020-03-17,DTU_2022_1015073_1_MG_IT_RO_200317_GSL_1,7.95,12.8,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015093,1,2020-08-13,DTU_2022_1015093_1_MG_IT_RO_200813_GSL_357,7.92,18.6,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015091,1,2020-07-31,DTU_2022_1015091_1_MG_IT_RO_200731_GSL_355,7.66,20.0,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015103,1,2020-10-27,DTU_2022_1015103_1_MG_IT_RO_201027_GSL_367,7.96,15.7,Italy,Rome,ATO2 Wastewater Treatment Plant
+1015108,1,2020-12-01,DTU_2022_1015108_1_MG_IT_RO_201201_GSL_372,8.05,12.7,Italy,Rome,ATO2 Wastewater Treatment Plant

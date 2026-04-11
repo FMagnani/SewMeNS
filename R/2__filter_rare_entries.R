@@ -1,6 +1,6 @@
 library(readr)
 
-copenhagen_abundances <- readRDS("..\\data\\processed\\abun_plants.rds")
+copenhagen_abundances <- readRDS("../data/processed/abun_plants.rds")
 
 #-------------------------------------------------------------------------------
 
