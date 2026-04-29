@@ -1,0 +1,525 @@
+---
+title: "seasonal_networks"
+format: html
+editor: source
+---
+
+## Libraries
+
+```{r, message=FALSE}
+library(tidyverse)
+library(mgnet)
+library(igraph)
+library(tidygraph)
+library(ggraph)
+```
+
+## Read and Clean
+
+```{r}
+sewage_cph <- readRDS("../data/processed/sewage_cph_mgnet.rds")
+```
+
+```{r}
+plants_seasons_cph_common <- sewage_cph %>%
+  filter_meta(collection_date >= as_date("2019-10-28")) %>%
+  mutate_meta(
+    season = case_when(
+      collection_date >= as_date("2019-10-28") &
+      collection_date <  as_date("2020-04-25") ~ "cold",
+      
+      collection_date >= as_date("2020-04-25") &
+      collection_date <= as_date("2020-10-01") ~ "hot",
+      
+      TRUE ~ NA_character_
+    )) %>%
+  split_meta(plant, season) %>%
+  mutate_meta(sample_sum = sum(abun)) %>%
+  filter_taxa(sum(abun >= 10) / n() >= .25) %>%
+  group_mgnet(taxa_id) %>%
+  filter_taxa(n() == length(.), .ungroup = T) %>%
+  mutate_meta(lost_counts_common = 1 - (sum(abun) / sample_sum))
+
+meta(plants_seasons_cph_common, .collapse = T) %>% pull(lost_counts_common) %>% summary
+```
+
+```{r}
+plants_seasons_cph_common <- plants_seasons_cph_common %>%
+  update_mgnet(norm = abun %>%
+                 zCompositions::cmultRepl(method = "CZM",
+                                          z.delete = F,
+                                          z.warning = 1) %>%
+                 vegan::decostand(method = "clr"))
+```
+
+## Diagnosis threshold value
+
+```{r}
+build_bonferroni_netw <- function(X, alpha = 0.05) {
+  X <- as.matrix(X)
+
+  cor_mat <- stats::cor(X, method = "pearson", use = "pairwise.complete.obs")
+  n_mat <- crossprod(!is.na(X))
+
+  p_mat <- matrix(NA_real_, nrow = ncol(X), ncol = ncol(X), dimnames = dimnames(cor_mat))
+
+  valid <- n_mat >= 3 & is.finite(cor_mat) & abs(cor_mat) < 1
+  t_mat <- cor_mat * sqrt((n_mat - 2) / (1 - cor_mat^2))
+  p_mat[valid] <- 2 * stats::pt(-abs(t_mat[valid]), df = n_mat[valid] - 2)
+
+  p_mat[abs(cor_mat) == 1 & n_mat >= 3] <- 0
+  diag(p_mat) <- 0
+
+  upper_idx <- upper.tri(p_mat)
+  p_adj <- matrix(NA_real_, nrow = ncol(X), ncol = ncol(X), dimnames = dimnames(cor_mat))
+  p_adj[upper_idx] <- stats::p.adjust(p_mat[upper_idx], method = "bonferroni")
+  p_adj[lower.tri(p_adj)] <- t(p_adj)[lower.tri(p_adj)]
+  diag(p_adj) <- 0
+
+  netw <- cor_mat
+  netw[is.na(p_adj) | p_adj >= alpha] <- 0
+  diag(netw) <- 0
+  netw <- graph_from_adjacency_matrix(netw, mode = "undirected", weighted = T)
+  
+  netw
+}
+```
+
+
+```{r}
+assoc_list <- plants_seasons_cph_common %>%
+  purrr::map(\(x) {
+    
+    cor_mat <- cor(norm(x))
+    n <- nsample(x)
+    
+    res <- psych::corr.p(cor_mat, n = n, adjust = "bonferroni", ci = FALSE)
+    p_bonf <- res$p
+    p_bonf[lower.tri(p_bonf)] <- t(p_bonf)[lower.tri(p_bonf)]
+
+  list(cor = cor_mat, p_bonf = p_bonf)
+    
+  })
+```
+
+```{r}
+diagnosis_from_assoc <- function(assoc, thr) {
+  
+  mask <- assoc$p_bonf <= thr
+  diag(mask) <- FALSE
+  adj <- assoc$cor * mask
+  
+  g <- graph_from_adjacency_matrix(
+    adjmatrix = adj, mode = "undirected",
+    weighted = TRUE, diag = FALSE)
+  
+  deg <- degree(g)
+  comp <- components(g)
+  comp_sizes <- sort(comp$csize, decreasing = TRUE)
+  n_edges <- gsize(g)
+  
+  tibble(
+    threshold = thr,
+    n_nodes = gorder(g),
+    n_edges = n_edges,
+    density = edge_density(g, loops = FALSE),
+    avg_degree = mean(deg),
+    frac_isolated = mean(deg == 0),
+    n_components = comp$no,
+    n_components_gt5 = sum(comp$csize > 5),
+    lcc_size = max(comp$csize),
+    lcc_fraction = max(comp$csize) / gorder(g),
+    second_lcc_size = if (length(comp_sizes) >= 2) comp_sizes[2] else 0L,
+    second_lcc_fraction = if (length(comp_sizes) >= 2) comp_sizes[2] / gorder(g) else 0,
+    component_entropy = vegan::diversity(comp$csize),
+    n_positive_edges = if (n_edges > 0) sum(E(g)$weight > 0) else 0L,
+    n_negative_edges = if (n_edges > 0) sum(E(g)$weight < 0) else 0L,
+    frac_positive = if (n_edges > 0) mean(E(g)$weight > 0) else NA_real_,
+    frac_negative = if (n_edges > 0) mean(E(g)$weight < 0) else NA_real_,
+    components_obj = list(comp)
+  )
+}
+```
+
+```{r}
+cache_dir  <- "../cache"
+cache_file <- file.path(cache_dir, "seasons_diagnosis.rds")
+
+if (!dir.exists(cache_dir)) {
+  dir.create(cache_dir, recursive = TRUE)
+}
+
+if (file.exists(cache_file)) {
+  message("Loading diagnostics from cache...")
+  diag_tbl <- readRDS(cache_file)
+} else {
+  message("Cache not found. Computing diagnostics...")
+  
+  future::plan(future::multisession)
+  
+  thr_grid <- rev(10^seq(-8, log10(0.2), length.out = 50))
+  
+  diag_tbl <- purrr::imap_dfr(assoc_list, function(assoc, plant_season) {
+    furrr::future_map_dfr(thr_grid, ~ diagnosis_from_assoc(assoc, .x)) %>%
+      dplyr::mutate(plant_season = plant_season, .before = 1)
+  })
+  
+  future::plan(future::sequential)
+  
+  saveRDS(diag_tbl, cache_file)
+  message("Diagnostics saved to: ", cache_file)
+}
+
+rm(cache_file, cache_dir)
+```
+
+
+```{r}
+diag_plot_tbl <- diag_tbl %>%
+  separate(plant_season, into = c("plant", "season"), sep = "-", remove = F) %>%
+  select(
+    plant_season, season, threshold,
+    density, avg_degree, frac_isolated,
+    lcc_size, second_lcc_size,
+    n_components, n_components_gt5,
+    component_entropy, n_edges) %>%
+  pivot_longer(cols = -c(plant_season, season, threshold),
+               names_to = "metric", values_to = "value") %>%
+  mutate(
+    metric = factor(
+      metric,
+      levels = c(
+        "density", "n_edges", "avg_degree", "frac_isolated", "lcc_size", "second_lcc_size",
+        "n_components", "n_components_gt5", "component_entropy"),
+      labels = c(
+        "Density", "Number of edges", "Average degree", "Fraction isolated",
+        "Largest connected component", "Second largest component",
+        "Number of components", "Components > 5 nodes", "Component entropy")))
+
+p_diag <- ggplot(diag_plot_tbl, aes(x = threshold, y = value,
+                                    group = plant_season, color = plant_season)) +
+  geom_line(linewidth = 0.9, alpha = .5) +
+  geom_point(size = 1.3, alpha = .75) +
+  facet_wrap(~ metric, scales = "free_y", ncol = 3) +
+  #scale_x_reverse(labels = \(x) sprintf("%.01e", x)) +
+  labs(
+    x = "Absolute correlation threshold",
+    y = NULL,
+    color = "Plant") +
+  theme_minimal(base_size = 18) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold"))
+```
+
+
+```{r, fig.width=15, fig.height=9}
+p_diag
+```
+
+```{r}
+ggsave(filename = "../plots/season_diagnosis.png", plot = p_diag, 
+       width = 15, height = 9, dpi = 300)
+```
+
+## Network Construction and Clean
+
+```{r}
+# plants_seasons_cph_common <- plants_seasons_cph_common %>%
+#   update_mgnet(netw = netkit::build_marginal_net(x = norm, 
+#                                                  corr_method = "pearson",
+#                                                  covariance_estimator = "sample", 
+#                                                  covariance_check = "never",
+#                                                  threshold_method = "pvalue",
+#                                                  adjust = "bonferroni",
+#                                                  threshold_value = .05),
+#                comm = netkit::cluster_signed_louvain(netw)) 
+
+plants_seasons_cph_common <- plants_seasons_cph_common %>%
+  update_mgnet(netw = netkit::build_marginal_net(x = norm,
+                                                 corr_method = "pearson",
+                                                 covariance_estimator = "sample",
+                                                 covariance_check = "never",
+                                                 threshold_method = "absolute",
+                                                 threshold_value = .85),
+               comm = netkit::cluster_signed_louvain(netw))
+```
+
+```{r}
+plants_seasons_cph_netw_filt <- plants_seasons_cph_common %>%
+  group_mgnet(mgnet, comm_id) %>%
+  filter_taxa(n() >= 20, .ungroup = T) 
+
+names(plants_seasons_cph_netw_filt)
+```
+
+```{r}
+common_cold <- plants_seasons_cph_netw_filt[c(1,2,3)] %>%
+  taxa_id %>% reduce(intersect)
+
+common_hot <- plants_seasons_cph_netw_filt[c(4,5,6)] %>%
+  taxa_id %>% reduce(intersect)
+
+common_taxa <- intersect(common_cold, common_hot)
+
+plants_seasons_cph_netw_core <- plants_seasons_cph_netw_filt %>%
+  mutate_taxa(
+    taxa_type = case_when(
+      taxa_id %in% common_taxa ~ "shared",
+      taxa_id %in% common_hot ~ "hot",
+      taxa_id %in% common_cold ~ "cold",
+      TRUE ~ NA_character_
+    )) %>%
+  #filter_taxa(!is.na(taxa_type))
+  filter_taxa(taxa_id %in% common_taxa)
+```
+
+```{r}
+signed_edge_jaccard <- function(g1, g2) {
+  e1 <- igraph::as_data_frame(g1, what = "edges") %>%
+    transmute(
+      node1 = pmin(from, to),
+      node2 = pmax(from, to),
+      sign = if_else(weight >= 0, "pos", "neg"),
+      edge_id = paste(node1, node2, sign, sep = "___")
+    ) %>%
+    pull(edge_id)
+  
+  e2 <- igraph::as_data_frame(g2, what = "edges") %>%
+    transmute(
+      node1 = pmin(from, to),
+      node2 = pmax(from, to),
+      sign = if_else(weight >= 0, "pos", "neg"),
+      edge_id = paste(node1, node2, sign, sep = "___")
+    ) %>%
+    pull(edge_id)
+  
+  union_size <- length(union(e1, e2))
+  if (union_size == 0) return(NA_real_)
+  
+  length(intersect(e1, e2)) / union_size
+}
+
+community_ari <- function(comm1, comm2) {
+  memb1 <- membership(comm1)
+  memb2 <- membership(comm2)
+  
+  nodes <- union(names(memb1), names(memb2))
+  
+  v1 <- setNames(rep(NA_integer_, length(nodes)), nodes)
+  v2 <- setNames(rep(NA_integer_, length(nodes)), nodes)
+  
+  v1[names(memb1)] <- memb1
+  v2[names(memb2)] <- memb2
+  
+  ok <- !is.na(v1) & !is.na(v2)
+  if (sum(ok) < 2) return(NA_real_)
+  
+  mclust::adjustedRandIndex(v1[ok], v2[ok])
+}
+
+
+degree_correlation <- function(g1, g2, method = "pearson") {
+  nodes <- union(V(g1)$name, V(g2)$name)
+  
+  d1 <- setNames(rep(0, length(nodes)), nodes)
+  d2 <- setNames(rep(0, length(nodes)), nodes)
+  
+  d1[V(g1)$name] <- degree(g1)
+  d2[V(g2)$name] <- degree(g2)
+  
+  cor(d1, d2, method = method)
+}
+```
+
+
+```{r}
+network_meta <- tibble(net_name = names(plants_seasons_cph_netw_core)) %>%
+  separate(net_name, into = c("plant", "season"), sep = "-", remove = FALSE)
+
+
+test <- plants_seasons_cph_netw_core %>%
+  filter_taxa(taxa_id %in% common_taxa)
+graph_list <- netw(test)
+comm_list <- comm(test)
+
+levels_sort <- c("Avedoere-cold", "Damhusaaen-cold", "Lynetten-cold",
+                 "Avedoere-hot", "Damhusaaen-hot", "Lynetten-hot")
+
+pairwise_tbl <- tidyr::crossing(
+  net1 = network_meta$net_name,
+  net2 = network_meta$net_name) %>%
+  filter(net1 < net2) %>%
+  left_join(network_meta, by = c("net1" = "net_name")) %>%
+  rename(plant1 = plant, season1 = season) %>%
+  left_join(network_meta, by = c("net2" = "net_name")) %>%
+  rename(plant2 = plant, season2 = season) %>%
+  mutate(
+    comparison_group = case_when(
+      season1 == "hot"  & season2 == "hot"  & plant1 != plant2 ~ "hot-hot across sites",
+      season1 == "cold" & season2 == "cold" & plant1 != plant2 ~ "cold-cold across sites",
+      plant1 == plant2 & season1 != season2 ~ "same site, different season",
+      TRUE ~ "other"
+    )) %>%
+  filter(comparison_group != "other") %>%
+  mutate(
+    edge_jaccard = map2_dbl(net1, net2, \(x, y) signed_edge_jaccard(graph_list[[x]],
+                                                                    graph_list[[y]])),
+    degree_cor = map2_dbl(net1, net2, \(x, y) degree_correlation(graph_list[[x]],
+                                                                 graph_list[[y]])),
+    community_ari = map2_dbl(net1, net2, \(x, y) community_ari(comm_list[[x]], 
+                                                               comm_list[[y]]))) %>%
+  mutate(net1 = factor(net1, levels = levels_sort)) %>%
+  mutate(comparison_group = factor(comparison_group, 
+                                   levels = c("cold-cold across sites",
+                                              "hot-hot across sites",
+                                              "same site, different season")),
+    site_pair = paste(pmin(plant1, plant2), pmax(plant1, plant2), sep = " – "),
+    season_label = case_when(
+      comparison_group == "cold-cold across sites" ~ "cold",
+      comparison_group == "hot-hot across sites" ~ "hot",
+      TRUE ~ NA_character_),
+    season_label = factor(season_label, levels = c("cold", "hot")))
+```
+
+```{r}
+pairwise_long <- pairwise_tbl %>%
+  pivot_longer(
+    cols = c(edge_jaccard, degree_cor, community_ari),
+    names_to = "metric",
+    values_to = "value"
+  ) %>%
+  mutate(
+    metric = factor(
+      metric,
+      levels = c("edge_jaccard", "degree_cor", "community_ari"),
+      labels = c("Signed edge Jaccard", "Degree correlation", "Community ARI")
+    )
+  )
+```
+
+
+```{r, fig.width=9, fig.height=5}
+ggplot(pairwise_long, aes(x = comparison_group, y = value, color = site_pair)) +
+  geom_point(
+    size = 2.8,
+    position = position_jitter(width = 0.06, height = 0)
+  ) +
+  stat_summary(fun = mean, geom = "crossbar", width = 0.45, fatten = 0) +
+  facet_wrap(~ metric, scales = "free_y") +
+  theme_minimal(base_size = 14) +
+  labs(x = NULL, y = NULL) +
+  theme(
+    axis.text.x = element_text(angle = 20, hjust = 1),
+    panel.grid.minor = element_blank()
+  )
+```
+
+```{r}
+link_tbl <- link(plants_seasons_cph_netw_core, .fmt = "tbl") %>%
+  left_join(
+    rename_with(taxa(plants_seasons_cph_netw_core, .collapse = T), \(x) paste0(x,"_from")),
+    by = join_by(mgnet == mgnet_from, from == taxa_id_from)
+  ) %>%
+  left_join(
+    rename_with(taxa(plants_seasons_cph_netw_core, .collapse = T), \(x) paste0(x,"_to")),
+    by = join_by(mgnet == mgnet_to, to == taxa_id_to)) %>%
+  mutate(
+    link_name = paste(pmin(from, to), pmax(from, to), sep = "___")
+  )
+```
+
+## Networks with same layout COLD
+
+```{r}
+cold_core <- plants_seasons_cph_netw_core[c(1,2,3)] %>%
+  mutate_link(link_name = paste(pmin(from, to), pmax(from,to), sep = "---")) %>%
+  group_link(link_name) %>%
+  mutate_link(missing_lynetten =
+                any(mgnet == "Avedoere-cold") &
+                any(mgnet == "Damhusaaen-cold") &
+                !any(mgnet == "Lynetten-cold"))
+
+missing_tbl <- cold_core %>%
+  link(.fmt = "tbl") %>%
+  group_by(link_name) %>%
+  summarise(
+    missing_lynetten = any(missing_lynetten),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+cold_consensus <- mgnet(
+  taxa = select(taxa(plants_seasons_cph_netw_core$`Damhusaaen-cold`), -comm_id),
+  netw =  netw(cold_core) %>%
+    map(\(x) sign(as_adjacency_matrix(x, sparse = F))) %>% 
+    reduce(`+`) %>%
+    graph_from_adjacency_matrix(mode = "undirected", weighted = T)) %>%
+  update_mgnet(comm = netkit::cluster_signed_louvain(netw)) %>%
+  group_mgnet(comm_id) %>%
+  mutate_netw(eig_comm = eigen_centrality(netw)$vector,
+              deg_comm = degree(netw)) %>%
+  mutate_taxa(node_label = if_else(row_number(desc(eig_comm)) <= 1,
+                                   taxa_id, NA), .ungroup = T) %>%
+  mutate_link(consensus = factor(weight, levels = c(1, 2, 3),
+                                 labels = c("1 site", "2 sites", "3 sites")),
+              link_name = paste(pmin(from, to), pmax(from,to), sep = "---")) %>%
+  mutate_taxa(family_label = replace_na(family, "Unknown"),
+              family_label = fct_lump_min(family_label, 5),
+              family_label = fct_relevel(family_label, "Other", "Unknown", after = Inf)) 
+```
+
+```{r, fig.width=15, fig.height=15, warning=FALSE}
+set.seed(42)
+
+lay_consensus <- netkit::layout_signed(netw(cold_consensus), 
+                                 with_fr(start.temp = 1)) %>% as.matrix()
+
+p_A <- to_tbl_graph(cold_consensus) %>%
+  activate(edges) %>%
+  left_join(missing_tbl, by = "link_name") %>%
+  ggraph(layout = lay_consensus) +
+  geom_edge_link(aes(color = missing_lynetten), show.legend = TRUE) +
+  scale_edge_color_manual(
+    values = c("TRUE" = "darkblue", "FALSE" = "lightblue"),
+    name = "Missing only in Lynetten") +
+  geom_node_point(size = 1, fill = NA, shape = 21, colour = "black", stroke = 0.3) +
+  theme_graph() 
+p_A
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

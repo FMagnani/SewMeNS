@@ -1,5 +1,5 @@
 ---
-title: "test"
+title: "plants_networks"
 format: html
 editor: source
 ---
@@ -14,6 +14,13 @@ library(tidygraph)
 library(ggraph)
 library(patchwork)
 library(ggalluvial)
+
+netfun <- new.env(parent = globalenv())
+
+source(
+  here::here("functions", "network_threshold_diagnosis.R"),
+  local = netfun
+)
 ```
 
 ## Read and Clean
@@ -63,48 +70,43 @@ plants_cph_common <- plants_cph_common %>%
 
 ```{r}
 assoc_list <- norm(plants_cph_common) %>%
-  purrr::map(\(clr) cor(clr))
+  map(\(clr) cor(clr, method = "pearson", use = "pairwise.complete.obs"))
 ```
 
 ```{r}
-diagnosis_from_assoc <- function(assoc, thr) {
-  
-  adj <- assoc
-  diag(adj) <- 0
-  adj[abs(adj) <= thr] <- 0
-  adj <- (adj + t(adj)) / 2
-  
-  g <- graph_from_adjacency_matrix(
-    adjmatrix = adj, mode = "undirected",
-    weighted = TRUE, diag = FALSE)
-  
-  deg <- degree(g)
-  comp <- components(g)
-  comp_sizes <- sort(comp$csize, decreasing = TRUE)
-  n_edges <- gsize(g)
-  
-  tibble(
-    threshold = thr,
-    n_nodes = gorder(g),
-    n_edges = n_edges,
-    density = edge_density(g, loops = FALSE),
-    avg_degree = mean(deg),
-    frac_isolated = mean(deg == 0),
-    n_components = comp$no,
-    n_components_gt5 = sum(comp$csize > 5),
-    lcc_size = max(comp$csize),
-    lcc_fraction = max(comp$csize) / gorder(g),
-    second_lcc_size = if (length(comp_sizes) >= 2) comp_sizes[2] else 0L,
-    second_lcc_fraction = if (length(comp_sizes) >= 2) comp_sizes[2] / gorder(g) else 0,
-    component_entropy = vegan::diversity(comp$csize),
-    n_positive_edges = if (n_edges > 0) sum(E(g)$weight > 0) else 0L,
-    n_negative_edges = if (n_edges > 0) sum(E(g)$weight < 0) else 0L,
-    frac_positive = if (n_edges > 0) mean(E(g)$weight > 0) else NA_real_,
-    frac_negative = if (n_edges > 0) mean(E(g)$weight < 0) else NA_real_,
-    components_obj = list(comp)
-  )
+## Threshold-dependent network analysis
+
+thresholds <- seq(0.50, 0.52, by = 0.01)
+
+cache_dir  <- "../cache"
+cache_file <- file.path(cache_dir, "triplicate_diagnosis.rds")
+
+if (!dir.exists(cache_dir)) {
+  dir.create(cache_dir, recursive = TRUE)
 }
+
+if (file.exists(cache_file)) {
+
+  message("Loading diagnostics from cache...")
+  threshold_results <- readRDS(cache_file)
+
+} else {
+
+  message("Cache not found. Computing diagnostics...")
+  threshold_results <- netfun$threshold_network_analysis(
+    assoc_list = assoc_list,
+    thresholds = thresholds,
+    method = "pearson"
+  )
+  saveRDS(threshold_results, cache_file)
+  message("Diagnostics saved to: ", cache_file)
+  
+}
+
+
+rm(thresholds, cache_file, cache_dir)
 ```
+
 
 ```{r}
 cache_dir  <- "../cache"
@@ -247,34 +249,45 @@ p_A
 ```
 
 
-```{r, fig.width=9, fig.height=2}
+```{r, fig.width=9, fig.height=3}
 # ----------------------------
-# Panel B: tile plot of top-ranked taxa
+# Panel B: top-ranked taxa composition
 # ----------------------------
 top_rank_tbl <- taxa_tbl %>%
   group_by(Plant) %>%
   arrange(desc(eig), .by_group = TRUE) %>%
   mutate(rank_eig = row_number()) %>%
   filter(rank_eig <= top_n) %>%
-  ungroup() 
+  ungroup() %>%
+  mutate(
+    Plant = factor(Plant, levels = c("Avedoere", "Damhusaaen", "Lynetten"))
+  )
 
-p_B <- ggplot(top_rank_tbl, aes(x = rank_eig, y = Plant, fill = node_type)) +
+p_B <- ggplot(top_rank_tbl, aes(x = rank_eig, y = 1, fill = node_type)) +
   geom_tile(color = "white", linewidth = 0.25) +
+  facet_wrap(~Plant, ncol = 1, scales = "free_y") +
   scale_x_continuous(
     breaks = c(1, 10, 20, 30, 40, 50, 75, 100)[c(1, 10, 20, 30, 40, 50, 75, 100) <= top_n],
-    expand = c(0, 0)) +
-  labs(x = paste0("Rank by eigenvector centrality (top ", top_n, ")"),
-       y = NULL, fill = NULL) +
+    expand = c(0, 0)
+  ) +
+  labs(
+    x = paste0("Rank by eigenvector centrality (top ", top_n, ")"),
+    y = NULL,
+    fill = NULL
+  ) +
   theme_bw() +
   theme(
+    strip.text = element_text(face = "bold"),
     legend.position = "bottom",
     panel.grid = element_blank(),
-    axis.ticks = element_blank())
+    axis.ticks = element_blank(),
+    axis.text.y = element_blank()
+  )
 p_B
 ```
 
 
-```{r, fig.width=9, fig.height=5}
+```{r, fig.width=9, fig.height=6}
 # ----------------------------
 # Combine with ggarrange
 # ----------------------------
@@ -284,7 +297,7 @@ plot_eig <- ggpubr::ggarrange(
   heights = c(3, 2),
   labels = c("A", "B"),
   common.legend = TRUE,
-  legend = "bottom") 
+  legend = "bottom", label.y = c(1, 1.08)) 
 
 plot_eig
 ```
@@ -332,7 +345,7 @@ sewage_cph_consensus <- mgnet(
               family_label = fct_relevel(family_label, "Other", "Unknown", after = Inf)) 
 ```
 
-```{r, fig.width=12, fig.height=9, warning=FALSE}
+```{r, fig.width=13, fig.height=8, warning=FALSE}
 set.seed(42)
 
 lay_consensus <- netkit::layout_signed(netw(sewage_cph_consensus), 
@@ -529,7 +542,7 @@ p_ari <- make_measurement_plot(
 ```
 
 
-```{r, fig.width=3, fig.height=9}
+```{r, fig.width=3, fig.height=8}
 p_B <- plot_spacer() / p_edge / p_degree / p_ari / plot_spacer() 
 
 p_B
@@ -537,9 +550,9 @@ p_B
 
 ## Combine Plots
 
-```{r, fig.width=12, fig.height=9, warning=FALSE}
+```{r, fig.width=16, fig.height=8, warning=FALSE}
 panel <- p_A + p_B +
-  plot_layout(widths = c(15, 3)) +
+  plot_layout(widths = c(13, 3)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 
 panel
@@ -547,7 +560,7 @@ panel
 
 ```{r}
 ggsave(filename = "../plots/network_consensus.png", plot = panel,
-       width = 17, height = 12, dpi = 300)
+       width = 16, height = 8, dpi = 300)
 ```
 
 ```{r}

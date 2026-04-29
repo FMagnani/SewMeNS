@@ -49,6 +49,21 @@ meta <- read_csv("raw/meta_location.csv") %>%
   column_to_rownames("complete_name")
 ```
 
+```{r}
+temperature <- read.csv("raw/temperatures.csv")
+
+temperature <- temperature %>%
+  select(NAME, DATE, TMIN, TMAX) %>%
+  filter(str_detect(NAME, "KOEBENHAVN")) %>%
+  filter(!is.na(TMIN) | !is.na(TMAX)) %>%
+  mutate(DATE = as.Date(DATE, "%Y-%m-%d")) %>%
+  filter(DATE >= "2019-01-01", DATE <= "2020-10-01") %>%
+  mutate(TMEAN = .5*(TMIN + TMAX)) %>%
+  group_by(DATE) %>%
+  summarise(TMEAN = mean(TMEAN))
+```
+
+
 ## Remove replicates and select Copenaghen samples
 
 ```{r}
