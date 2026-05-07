@@ -66,23 +66,40 @@ signed_strength_correlation <- function(g1, g2, method = "pearson") {
   stats::cor(s1, s2, method = method)
 }
 
-
 community_ari_from_graphs <- function(g1, g2, cluster_fun = netkit::cluster_signed_louvain) {
-  comm1 <- cluster_fun(g1)
-  comm2 <- cluster_fun(g2)
   
+  comm1 <- tryCatch(
+    cluster_fun(g1),
+    error = function(e) {
+      warning("Community detection failed for g1: ", conditionMessage(e))
+      NULL
+    }
+  )
+
+  comm2 <- tryCatch(
+    cluster_fun(g2),
+    error = function(e) {
+      warning("Community detection failed for g2: ", conditionMessage(e))
+      NULL
+    }
+  )
+
+  if (is.null(comm1) || is.null(comm2)) {
+    return(NA_real_)
+  }
+
   memb1 <- igraph::membership(comm1)
   memb2 <- igraph::membership(comm2)
-  
+
   names(memb1) <- igraph::V(g1)$name
   names(memb2) <- igraph::V(g2)$name
-  
+
   common_nodes <- intersect(names(memb1), names(memb2))
-  
+
   if (length(common_nodes) == 0) {
     return(NA_real_)
   }
-  
+
   mclust::adjustedRandIndex(
     memb1[common_nodes],
     memb2[common_nodes]
