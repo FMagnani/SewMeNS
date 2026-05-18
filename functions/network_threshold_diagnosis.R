@@ -36,14 +36,10 @@ similarity_from_graphs <- function(graphs, thr, method = "pearson",
         edge_jaccard_signed = edge_jaccard_signed(g1, g2),
         degree_cor = degree_correlation(g1, g2, method = method),
         signed_strength_cor = signed_strength_correlation(g1, g2, method = method),
-        community_ari = community_ari_from_graphs(
-          g1 = g1,
-          g2 = g2,
-          cluster_fun = cluster_fun
-        )
-      )
-    }
-  )
+        community_ari = community_ari_from_graphs(g1 = g1, 
+                                                  g2 = g2,
+                                                  cluster_fun = cluster_fun))
+    })
 }
 
 diagnosis_from_graph <- function(g, thr, network_name = NA_character_) {

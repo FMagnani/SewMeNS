@@ -76,10 +76,10 @@ assoc_list <- norm(plants_cph_common) %>%
 ```{r}
 ## Threshold-dependent network analysis
 
-thresholds <- seq(0.50, 0.52, by = 0.01)
+thresholds <- seq(0.0, 1, by = 0.01)
 
 cache_dir  <- "../cache"
-cache_file <- file.path(cache_dir, "triplicate_diagnosis.rds")
+cache_file <- file.path(cache_dir, "triplicate_prev0p25_mincount10_seed42_pearson.rds")
 
 if (!dir.exists(cache_dir)) {
   dir.create(cache_dir, recursive = TRUE)
@@ -103,46 +103,37 @@ if (file.exists(cache_file)) {
   
 }
 
-
 rm(thresholds, cache_file, cache_dir)
 ```
 
+## Similarities
 
-```{r}
-cache_dir  <- "../cache"
-cache_file <- file.path(cache_dir, "triplicate_diagnosis.rds")
+```{r, fig.width=7, fig.height=4}
+similarity_long <- similarity %>%
+  mutate(comparison = paste(network1, network2, sep = " - ")) %>%
+  pivot_longer(
+    cols = c(edge_jaccard_signed, degree_cor, signed_strength_cor, community_ari),
+    names_to = "metric", values_to = "value")
 
-if (!dir.exists(cache_dir)) {
-  dir.create(cache_dir, recursive = TRUE)
-}
+p_similarity_threshold <- ggplot(
+  similarity_long,
+  aes(x = threshold, y = value, color = comparison)
+) +
+  geom_line(linewidth = 0.8, alpha = 0.85, na.rm = TRUE) +
+  geom_vline(xintercept = 0.85, linetype = "dashed", linewidth = 0.4) +
+  facet_wrap(~ metric, scales = "free_y", ncol = 2) +
+  labs(x = "Absolute correlation threshold",
+       y = "Pairwise similarity", color = "Network pair") +
+  theme_bw() + theme(legend.position = "top")
 
-if (file.exists(cache_file)) {
-  message("Loading diagnostics from cache...")
-  diag_tbl <- readRDS(cache_file)
-} else {
-  message("Cache not found. Computing diagnostics...")
-  
-  future::plan(future::multisession)
-  
-  thr_grid <- seq(0.0, 1, by = 0.01)
-  
-  diag_tbl <- purrr::imap_dfr(assoc_list, function(assoc, plant) {
-    furrr::future_map_dfr(thr_grid, ~ diagnosis_from_assoc(assoc, .x)) %>%
-      dplyr::mutate(plant = plant, .before = 1)
-  })
-  
-  future::plan(future::sequential)
-  
-  saveRDS(diag_tbl, cache_file)
-  message("Diagnostics saved to: ", cache_file)
-}
-
-rm(cache_file, cache_dir)
+p_similarity_threshold
 ```
 
+## Diagnosis
 
 ```{r}
-diag_plot_tbl <- diag_tbl %>%
+diag_plot_tbl <- threshold_results$diagnosis %>%
+  rename(plant = network) %>%
   select(
     plant, threshold,
     density, avg_degree, frac_isolated,
@@ -197,7 +188,7 @@ plants_cph_common <- plants_cph_common %>%
                                                  covariance_estimator = "sample", 
                                                  covariance_check = "never",
                                                  threshold_method = "absolute", 
-                                                 threshold_value = .85),
+                                                 threshold_value = .8),
                comm = netkit::cluster_signed_louvain(netw)) 
 ```
 
@@ -308,8 +299,8 @@ ggsave("../plots/eigen_centrality_shared_vs_specific.png", plot_eig,
 ```
 
 ```{r}
-rm(assoc_list, diag_plot_tbl, diag_tbl, taxa_tbl, top_rank_tbl,
-   p_diag, p_A, p_B, plot_eig, top_n, diagnosis_from_assoc)
+rm(assoc_list, diag_plot_tbl, taxa_tbl, top_rank_tbl,
+   p_diag, p_A, p_B, plot_eig, top_n)
 ```
 
 
@@ -395,64 +386,6 @@ p_A <- to_tbl_graph(sewage_cph_consensus) %>%
 p_A
 ```
 
-## Similarity Measurments
-
-```{r}
-# edge jaccard index
-
-edge_ids_signed <- function(g) {
-  ed <- as_edgelist(g, names = TRUE)
-  w <- E(g)$weight
-  
-  tibble(
-    from = pmin(ed[, 1], ed[, 2]),
-    to = pmax(ed[, 1], ed[, 2]),
-    sign = sign(w)
-  ) %>%
-    mutate(edge_id = paste(from, to, sign, sep = "||")) %>%
-    pull(edge_id)
-}
-
-edge_jaccard_signed <- function(g1, g2) {
-  e1 <- edge_ids_signed(g1)
-  e2 <- edge_ids_signed(g2)
-  
-  length(intersect(e1, e2)) / length(union(e1, e2))
-}
-```
-
-```{r}
-# degree correlation
-degree_correlation <- function(g1, g2, method = "pearson") {
-  nodes <- union(V(g1)$name, V(g2)$name)
-  
-  d1 <- setNames(rep(0, length(nodes)), nodes)
-  d2 <- setNames(rep(0, length(nodes)), nodes)
-  
-  d1[V(g1)$name] <- degree(g1)
-  d2[V(g2)$name] <- degree(g2)
-  
-  cor(d1, d2, method = method)
-}
-```
-
-```{r}
-# Adjusted random index on communities
-comm_wide <- taxa(plants_cph_netw_filt, .collapse = T) %>%
-  rename(plant = mgnet) %>%
-  select(plant, taxa_id, comm_id) %>%
-  pivot_wider(names_from = plant, values_from = comm_id)
-
-community_ari <- function(df_wide, plant1, plant2) {
-  x <- df_wide[[plant1]]
-  y <- df_wide[[plant2]]
-  
-  keep <- !is.na(x) & !is.na(y)
-  
-  mclust::adjustedRandIndex(x[keep], y[keep])
-}
-```
-
 ```{r}
 # construct the tibble with the measurments
 graph_list <- netw(plants_cph_netw_comm)
@@ -473,9 +406,7 @@ pairwise_tbl <- tribble(
     ),
     community_ARI = purrr::map2_dbl(
       plant_1, plant_2,
-      ~ community_ari(comm_wide, .x, .y)
-    )
-  ) %>%
+      ~ community_ari(graph_list, .x, .y))) %>%
   mutate(pair = factor(pair, levels = c("Avedoere – Damhusaaen",
                                         "Avedoere – Lynetten",
                                         "Damhusaaen – Lynetten")))
@@ -564,11 +495,9 @@ ggsave(filename = "../plots/network_consensus.png", plot = panel,
 ```
 
 ```{r}
-rm(comm_wide, graph_list, pairwise_tbl, make_measurement_plot, panel)
+rm(graph_list, pairwise_tbl, make_measurement_plot, panel)
 rm(list = ls(pattern = "^p_"))
 ```
-
-## Networks with same layout
 
 ```{r}
 plants_cph_netw_comm <- plants_cph_netw_comm %>%
@@ -576,13 +505,18 @@ plants_cph_netw_comm <- plants_cph_netw_comm %>%
               edge_abs = abs(weight)) %>%
   group_mgnet(mgnet, comm_id) %>%
   mutate_taxa(node_label = if_else(row_number(desc(eig_comm)) <= 1,
-                                   taxa_id, NA), .ungroup = T)
+                                   taxa_id, NA), .ungroup = T) 
 ```
 
 ```{r}
 plot_network_fixed_layout <- function(g, title = NULL) {
   
-  ggraph(g, layout = lay_consensus) +
+  as_tbl_graph(g) %>%
+    activate(nodes) %>%
+    mutate(
+      comm_id = factor(comm_id,
+                       levels = sort(unique(as.numeric(as.character(comm_id)))))) %>%
+  ggraph(layout = lay_consensus) +
     geom_edge_link(
       aes(color = edge_sign, alpha = edge_abs, width = edge_abs),
       show.legend = FALSE) +
@@ -592,16 +526,23 @@ plot_network_fixed_layout <- function(g, title = NULL) {
     scale_edge_width_continuous(range = c(0.2, 1)) +
     geom_node_point(aes(size = eig_comm, fill = comm_id),
                   shape = 21, colour = "black", stroke = 0.3,
-                  show.legend = FALSE) +
+                  show.legend = c(size = FALSE, fill = TRUE)) +
     geom_node_text(aes(label = node_label), repel = TRUE, size = 3, fontface = "bold") +
     scale_size_continuous(range = c(1, 6), guide = "none") +
     theme_graph() +
     coord_equal() +
     labs(title = title) +
-    theme(
-      plot.title = element_text(face = "bold", hjust = 0.5, size = 18),
-      plot.margin = margin(0, 0, 0, 0),
-      panel.border = element_rect(color = "black", fill = NA, linewidth = 0.8)) 
+    guides(fill = guide_legend(direction = "horizontal",
+                               title.position = "top",
+                               nrow = 2,
+                               override.aes = list(size = 4, shape = 21, 
+                                                   colour = "black"))) + 
+    theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 18),
+          plot.margin = margin(0, 0, 0, 0),
+          panel.border = element_rect(color = "black", fill = NA, linewidth = 0.8),
+          legend.position = c(0.98, 0.98), 
+          legend.justification = c(1, 1)) +
+    ggqualpal::scale_fill_qualpal()
 }
 ```
 
@@ -706,7 +647,7 @@ p_deg_AL <- make_degree_scatter(degree_tbl, "Avedoere", "Lynetten")
 p_deg_DL <- make_degree_scatter(degree_tbl, "Damhusaaen", "Lynetten")
 ```
 
-```{r, fig.width=12, fig.height=4}
+```{r, fig.width=12, fig.height=4, message=FALSE}
 p_deg <- p_deg_AD + p_deg_AL + p_deg_DL
 p_deg
 ```
